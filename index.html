@@ -40,6 +40,11 @@
             fieldset > input {
                 margin-bottom:.5em
             }
+
+            p.small {
+                font-size:.8em;
+            }
+
         </style>
     </head>
     <body>
@@ -48,6 +53,9 @@
         </div>
         <fieldset>
             <h3>Settings</h3>
+
+            <p class="small">Hint: Set the "Tollerance" then "Click" on the image to erase an image area background. <br/> It's also possible to undo/reset up to 5 image states backwards.</p>
+
             <label for="tolleranceFied">Tollerance</label>
             <input id="tolleranceFied" type="range" name="tollerance" min="0" max="100" value="0"/>
             <br/>

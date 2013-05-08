@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Canvas Magic Eraser Tool page</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+        <style>
+            * {
+                font-family: sans-serif;
+                font-size:inherit
+            }
+
+            body {
+                background:#eee;
+                font-size:16px;
+                margin:10px;
+                padding:0
+            }
+
+            #originalImageCanvas {
+                border:1px solid #000
+            }
+
+            fieldset {
+                border:none;
+                margin:0;
+                padding:0;
+                margin-top:1em;
+                width:300px
+            }
+
+            fieldset > h3 {
+                margin:.5em 0
+            }
+
+            fieldset > label {
+                display:block;
+                font-size:.9em
+            }
+
+            fieldset > input {
+                margin-bottom:.5em
+            }
+        </style>
+    </head>
+    <body>
+        <div id="canvasWrapper">
+            <canvas id="originalImageCanvas"></canvas>
+        </div>
+        <fieldset>
+            <h3>Settings</h3>
+            <label for="tolleranceFied">Tollerance</label>
+            <input id="tolleranceFied" type="range" name="tollerance" min="0" max="100" value="0"/>
+            <br/>
+            <input id="backBtn" type="submit" value="Undo" disabled/>
+            <input id="resetBtn" type="submit" value="Reset" disabled/>
+        </fieldset>
+
+        <script type="text/javascript" src="js/magicEraser.js"></script>
+        <script type="text/javascript">
+
+            var magicEraser = new MagicEraser(document.getElementById("originalImageCanvas"), "images/twitter-bird.png");
+
+            document.getElementById('tolleranceFied').addEventListener('change', function(e) {
+                magicEraser.tollerance = parseInt(this.value);
+            }, false);
+
+            var backButton = document.getElementById('backBtn'),
+                resetButton = document.getElementById('resetBtn');
+
+            backButton.addEventListener('click', function() {
+                magicEraser.back();
+            }, false);
+            resetButton.addEventListener('click', function() {
+                magicEraser.reset();
+            }, false);
+
+            magicEraser.stateChanged = function() {
+                if(this.history.length>1) {
+                    resetButton.removeAttribute('disabled');
+                    backButton.removeAttribute('disabled');
+                } else {
+                    resetButton.setAttribute('disabled', 'disabled');
+                    backButton.setAttribute('disabled', 'disabled');
+                }
+            };
+        </script>
+   	</body>
+</html>
